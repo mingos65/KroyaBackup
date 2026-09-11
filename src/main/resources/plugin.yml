@@ -1,0 +1,19 @@
+name: KroyaBackup
+main: dev.kroyabackup.KroyaBackupPlugin
+version: ${project.version}
+api-version: "1.21"
+folia-supported: false
+authors: [OWNER]
+description: Automatische Welt-Backups und geplanter taeglicher Neustart.
+
+commands:
+  backup:
+    description: 'Sichert alle Welten als Zip (Nutzung: /backup <now|list>)'
+    usage: /backup <now|list>
+    permission: kroyabackup.admin
+    permission-message: '&cDu hast keine Berechtigung dafuer.'
+
+permissions:
+  kroyabackup.admin:
+    description: Erlaubt manuelle Welt-Backups per /backup
+    default: op

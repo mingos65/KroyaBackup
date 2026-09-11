@@ -1,0 +1,24 @@
+# =====================================================
+#                KroyaBackup - Config
+# =====================================================
+backup:
+  # Automatische komplette Welt-Backups (alle Bukkit-Welten als Zip, siehe
+  # /backup now|list) - unabhaengig vom Host-Panel (das nur manuelle
+  # Snapshots kennt) und unabhaengig von Plugins wie PlotSquared, deren
+  # eigenes Backup-System einen geloeschten Plot nur absichert, solange
+  # "delete-on-unclaim" es nicht sofort wieder entfernt. Laeuft bewusst
+  # KOMPLETT still (kein Chat) - nur der taegliche Neustart unten wird angekuendigt.
+  enabled: true
+  # Alle wie viele Stunden automatisch gesichert wird
+  interval-hours: 2
+  # Wie viele Backup-Zeitpunkte aufbewahrt werden (aeltester fliegt raus,
+  # sobald ein neues dazukommt), aeltere werden automatisch geloescht
+  keep-count: 12
+restart:
+  # Taeglicher automatischer Neustart zu fester Uhrzeit (Format HH:mm) -
+  # nutzt Papers eingebauten /restart-Befehl, damit der Host-Wrapper den
+  # Prozess sauber neu hochfaehrt (kein hartes Kill).
+  enabled: true
+  time: "04:00"
+  # Wie viele Minuten vorher im Chat angekuendigt wird
+  warning-minutes: 5
