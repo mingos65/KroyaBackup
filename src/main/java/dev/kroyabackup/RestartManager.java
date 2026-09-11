@@ -10,21 +10,25 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
 /**
- * Taeglicher automatischer Neustart zu fester Uhrzeit (config: restart.time),
- * mit einer Chat-Ankuendigung "restart.warning-minutes" vorher. Nutzt Papers
- * eingebauten "/restart"-Befehl statt selbst herunterzufahren, damit der
- * Host-Wrapper den Prozess wie gewohnt sauber neu startet.
+ * Chat-Ankuendigung "restart.warning-minutes" vor dem taeglichen Neustart
+ * (config: restart.time). Loest den Neustart selbst NICHT aus: Papers
+ * eingebannter "/restart"-Befehl braucht ein "start.sh"-Wrapper-Skript, das
+ * dieser Host nicht verwendet - dort wuerde der Befehl den Server nur
+ * abschalten, ohne ihn wieder hochzufahren (getestet, siehe Server-Log
+ * "Startup script './start.sh' does not exist! Stopping server."). Der
+ * eigentliche Neustart muss daher ueber die native "Geplante Neustart-Zeiten"-
+ * Funktion im Host-Panel eingestellt werden (gleiche Uhrzeit wie restart.time
+ * hier), die zuverlaessig mit dem Prozess-Supervisor des Hosts zusammenspielt.
  *
  * Statt eines Sekunden-Takts, der die Uhrzeit staendig abfragt, wird die
- * Verzoegerung bis zum naechsten Warn-/Neustart-Zeitpunkt einmalig berechnet
- * und per runTaskLater eingeplant - beim naechsten Plugin-Start (also nach
- * jedem Neustart) wird automatisch der Zeitpunkt fuer den Folgetag geplant.
+ * Verzoegerung bis zum naechsten Warn-Zeitpunkt einmalig berechnet und per
+ * runTaskLater eingeplant - beim naechsten Plugin-Start (also nach jedem
+ * Neustart) wird automatisch der Zeitpunkt fuer den Folgetag geplant.
  */
 public class RestartManager {
 
     private final KroyaBackupPlugin plugin;
     private BukkitTask warningTask;
-    private BukkitTask restartTask;
 
     public RestartManager(KroyaBackupPlugin plugin) {
         this.plugin = plugin;
@@ -41,9 +45,6 @@ public class RestartManager {
         if (warningTask != null) {
             warningTask.cancel();
         }
-        if (restartTask != null) {
-            restartTask.cancel();
-        }
     }
 
     private void scheduleNext() {
@@ -56,23 +57,20 @@ public class RestartManager {
             nextRestart = nextRestart.plusDays(1);
         }
         LocalDateTime warningAt = nextRestart.minusMinutes(warningMinutes);
-
-        long restartDelayTicks = Duration.between(now, nextRestart).toMillis() / 50L;
-        restartTask = Bukkit.getScheduler().runTaskLater(plugin, this::executeRestart, restartDelayTicks);
-
-        if (warningAt.isAfter(now)) {
-            long warningDelayTicks = Duration.between(now, warningAt).toMillis() / 50L;
-            warningTask = Bukkit.getScheduler().runTaskLater(plugin, () -> broadcastWarning(warningMinutes), warningDelayTicks);
+        if (!warningAt.isAfter(now)) {
+            warningAt = warningAt.plusDays(1);
         }
+
+        long warningDelayTicks = Duration.between(now, warningAt).toMillis() / 50L;
+        warningTask = Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            broadcastWarning(warningMinutes);
+            scheduleNext();
+        }, warningDelayTicks);
     }
 
     private void broadcastWarning(int minutes) {
         Bukkit.broadcastMessage(MessageUtil.get(plugin.getMessages(), "restart-warning")
                 .replace("%minutes%", String.valueOf(minutes)));
-    }
-
-    private void executeRestart() {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
     }
 
     private LocalTime parseTime(String raw) {
