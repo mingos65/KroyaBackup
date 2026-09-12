@@ -12,9 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * /backup now - sichert sofort alle Welten (laeuft im Hintergrund).
+ * /backup now - sichert sofort alle Welten (läuft im Hintergrund).
  * /backup list - zeigt vorhandene Backup-Zeitpunkte, neueste zuerst.
- * Auch von der Server-Konsole aus nutzbar, keine Spieler-Position noetig.
+ * Auch von der Server-Konsole aus nutzbar, keine Spieler-Position nötig.
  */
 public class BackupCommand implements CommandExecutor, TabCompleter {
 

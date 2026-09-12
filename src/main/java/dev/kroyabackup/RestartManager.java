@@ -10,20 +10,20 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
 /**
- * Chat-Ankuendigung "restart.warning-minutes" vor dem taeglichen Neustart
- * (config: restart.time). Loest den Neustart selbst NICHT aus: Papers
+ * Chat-Ankuendigung "restart.warning-minutes" vor dem täglichen Neustart
+ * (config: restart.time). Löst den Neustart selbst NICHT aus: Papers
  * eingebannter "/restart"-Befehl braucht ein "start.sh"-Wrapper-Skript, das
- * dieser Host nicht verwendet - dort wuerde der Befehl den Server nur
+ * dieser Host nicht verwendet - dort würde der Befehl den Server nur
  * abschalten, ohne ihn wieder hochzufahren (getestet, siehe Server-Log
  * "Startup script './start.sh' does not exist! Stopping server."). Der
- * eigentliche Neustart muss daher ueber die native "Geplante Neustart-Zeiten"-
+ * eigentliche Neustart muss daher über die native "Geplante Neustart-Zeiten"-
  * Funktion im Host-Panel eingestellt werden (gleiche Uhrzeit wie restart.time
- * hier), die zuverlaessig mit dem Prozess-Supervisor des Hosts zusammenspielt.
+ * hier), die zuverlässig mit dem Prozess-Supervisor des Hosts zusammenspielt.
  *
  * Statt eines Sekunden-Takts, der die Uhrzeit staendig abfragt, wird die
- * Verzoegerung bis zum naechsten Warn-Zeitpunkt einmalig berechnet und per
- * runTaskLater eingeplant - beim naechsten Plugin-Start (also nach jedem
- * Neustart) wird automatisch der Zeitpunkt fuer den Folgetag geplant.
+ * Verzoegerung bis zum nächsten Warn-Zeitpunkt einmalig berechnet und per
+ * runTaskLater eingeplant - beim nächsten Plugin-Start (also nach jedem
+ * Neustart) wird automatisch der Zeitpunkt für den Folgetag geplant.
  */
 public class RestartManager {
 

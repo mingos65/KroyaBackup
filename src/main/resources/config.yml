@@ -3,23 +3,23 @@
 # =====================================================
 backup:
   # Automatische komplette Welt-Backups (alle Bukkit-Welten als Zip, siehe
-  # /backup now|list) - unabhaengig vom Host-Panel (das nur manuelle
-  # Snapshots kennt) und unabhaengig von Plugins wie PlotSquared, deren
-  # eigenes Backup-System einen geloeschten Plot nur absichert, solange
-  # "delete-on-unclaim" es nicht sofort wieder entfernt. Laeuft bewusst
-  # KOMPLETT still (kein Chat) - nur der taegliche Neustart unten wird angekuendigt.
+  # /backup now|list) - unabhängig vom Host-Panel (das nur manuelle
+  # Snapshots kennt) und unabhängig von Plugins wie PlotSquared, deren
+  # eigenes Backup-System einen gelöschten Plot nur absichert, solange
+  # "delete-on-unclaim" es nicht sofort wieder entfernt. Läuft bewusst
+  # KOMPLETT still (kein Chat) - nur der tägliche Neustart unten wird angekuendigt.
   enabled: true
   # Alle wie viele Stunden automatisch gesichert wird
   interval-hours: 2
-  # Wie viele Backup-Zeitpunkte aufbewahrt werden (aeltester fliegt raus,
-  # sobald ein neues dazukommt), aeltere werden automatisch geloescht
+  # Wie viele Backup-Zeitpunkte aufbewahrt werden (ältester fliegt raus,
+  # sobald ein neues dazukommt), ältere werden automatisch gelöscht
   keep-count: 12
 restart:
-  # Nur die Chat-Ankuendigung vor dem taeglichen Neustart (Format HH:mm) -
+  # Nur die Chat-Ankuendigung vor dem täglichen Neustart (Format HH:mm) -
   # den eigentlichen Neustart macht NICHT dieses Plugin, sondern die native
   # "Geplante Neustart-Zeiten"-Funktion im Host-Panel (dort dieselbe Uhrzeit
   # eintragen). Papers /restart-Befehl braucht ein "start.sh"-Skript, das
-  # dieser Host nicht nutzt - er wuerde den Server sonst nur abschalten.
+  # dieser Host nicht nutzt - er würde den Server sonst nur abschalten.
   enabled: true
   time: "04:00"
   # Wie viele Minuten vorher im Chat angekuendigt wird

@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
- * Kleines Hilfswerkzeug fuer Chat-Nachrichten: wandelt &-Farbcodes um und
+ * Kleines Hilfswerkzeug für Chat-Nachrichten: wandelt &-Farbcodes um und
  * holt Texte aus der messages.yml, inklusive Ersetzung von %prefix%.
  */
 public final class MessageUtil {

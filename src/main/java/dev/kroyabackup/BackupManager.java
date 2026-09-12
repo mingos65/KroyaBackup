@@ -22,16 +22,16 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * Sichert regelmaessig ALLE Bukkit-Welten als Zip auf die Festplatte -
- * unabhaengig vom Host-Panel (das nur manuelle Snapshots kennt) und
- * unabhaengig von einzelnen Plugins wie PlotSquared (deren eigenes
- * Backup-System einen geloeschten Plot nur sichert, wenn "delete-on-unclaim"
+ * Sichert regelmäßig ALLE Bukkit-Welten als Zip auf die Festplatte -
+ * unabhängig vom Host-Panel (das nur manuelle Snapshots kennt) und
+ * unabhängig von einzelnen Plugins wie PlotSquared (deren eigenes
+ * Backup-System einen gelöschten Plot nur sichert, wenn "delete-on-unclaim"
  * nicht sofort wieder alles entfernt).
  *
- * world.save() laeuft synchron auf dem Hauptthread (noetig, um wirklich
+ * world.save() läuft synchron auf dem Hauptthread (nötig, um wirklich
  * alle offenen Chunks vorher auf die Platte zu schreiben), das eigentliche
  * Zippen danach asynchron, damit ein grosser Weltordner den Server nicht
- * fuer Sekunden einfrieren laesst.
+ * für Sekunden einfrieren lässt.
  */
 public class BackupManager {
 
@@ -56,7 +56,7 @@ public class BackupManager {
         }
     }
 
-    /** Sichert alle Welten. feedbackTo darf null sein (automatischer, geplanter Lauf ohne Chat-Rueckmeldung). */
+    /** Sichert alle Welten. feedbackTo darf null sein (automatischer, geplanter Lauf ohne Chat-Rückmeldung). */
     public void performBackup(CommandSender feedbackTo) {
         for (World world : Bukkit.getWorlds()) {
             world.save();
@@ -110,7 +110,7 @@ public class BackupManager {
         }
     }
 
-    /** Loescht die aeltesten Backup-Ordner, bis nur noch "backup.keep-count" uebrig sind. */
+    /** Löscht die ältesten Backup-Ordner, bis nur noch "backup.keep-count" uebrig sind. */
     private void pruneOldBackups(File backupRoot) {
         File[] dirs = backupRoot.listFiles(File::isDirectory);
         if (dirs == null) {
